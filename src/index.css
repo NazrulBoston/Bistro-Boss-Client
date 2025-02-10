@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "tailwindcss";
+@plugin "daisyui";
+
+
+.banner-img {
+    height: 550px; /* Adjust height as needed */
+    width: 100%; /* Ensures full width */
+    object-fit: cover; /* Crops the image to fit without distortion */
+  }

@@ -1,0 +1,47 @@
+[
+  {
+    "_id": {
+      "$oid": "65b8c1a1d6f1c5e9a4a12345"
+    },
+    "name": "Greek Salad",
+    "image": "https://cristianonew.ukrdevs.com/wp-content/uploads/2016/08/product-1-370x247.jpg",
+    "description": "A refreshing mix of lettuce, tomatoes, olives, feta cheese, and red onions with a light vinaigrette.",
+    "price": 12.99
+  },
+  {
+    "_id": {
+      "$oid": "65b8c1a1d6f1c5e9a4a12346"
+    },
+    "name": "Grilled Salmon",
+    "image": "https://cristianonew.ukrdevs.com/wp-content/uploads/2016/08/product-5-370x247.jpg",
+    "description": "Perfectly grilled salmon served with roasted vegetables and a lemon butter sauce.",
+    "price": 18.99
+  },
+  {
+    "_id": {
+      "$oid": "65b8c1a1d6f1c5e9a4a12347"
+    },
+    "name": "Filet Mignon",
+    "image": "https://cristianonew.ukrdevs.com/wp-content/uploads/2016/08/product-8-370x247.jpg",
+    "description": "Juicy and tender filet mignon, cooked to perfection, with garlic mashed potatoes and steamed asparagus.",
+    "price": 29.99
+  },
+  {
+    "_id": {
+      "$oid": "65b8c1a1d6f1c5e9a4a12348"
+    },
+    "name": "Pasta Primavera",
+    "image": "https://cristianonew.ukrdevs.com/wp-content/uploads/2016/08/product-2-370x247.jpg",
+    "description": "A delightful combination of fresh vegetables and pasta in a light garlic and olive oil sauce.",
+    "price": 14.99
+  },
+  {
+    "_id": {
+      "$oid": "65b8c1a1d6f1c5e9a4a12349"
+    },
+    "name": "Tiramisu",
+    "image": "https://cristianonew.ukrdevs.com/wp-content/uploads/2016/08/product-3-370x247.jpg",
+    "description": "Classic Italian dessert made with layers of espresso-soaked ladyfingers and mascarpone cream.",
+    "price": 8.99
+  }
+]
