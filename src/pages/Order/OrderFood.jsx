@@ -9,13 +9,13 @@ import { useParams } from "react-router";
 
 const OrderFood = () => {
     const categories = ['salad', 'pizza', 'soup', 'dessert', 'drinks']
-    const{category} = useParams();
+    const { category } = useParams();
     const initialIndex = categories.indexOf(category)
     const [tabIndex, setTabIndex] = useState(initialIndex);
     const [menu] = useMenu();
-   
 
-    const desserts = menu.filter(item => item.category === 'dessert');
+
+    const dessert = menu.filter(item => item.category === 'dessert');
     const salad = menu.filter(item => item.category === 'salad');
     const pizza = menu.filter(item => item.category === 'pizza');
     const soup = menu.filter(item => item.category === 'soup');
@@ -40,19 +40,19 @@ const OrderFood = () => {
                         <Tab>Drinks</Tab>
                     </TabList>
                     <TabPanel>
-                       <OrderTab items={salad}></OrderTab>
+                        <OrderTab items={salad}></OrderTab>
                     </TabPanel>
                     <TabPanel>
-                    <OrderTab items={desserts}></OrderTab>
+                        <OrderTab items={soup}></OrderTab>
                     </TabPanel>
                     <TabPanel>
-                    <OrderTab items={pizza}></OrderTab>
+                        <OrderTab items={pizza}></OrderTab>
                     </TabPanel>
                     <TabPanel>
-                    <OrderTab items={soup}></OrderTab>
+                        <OrderTab items={dessert}></OrderTab>
                     </TabPanel>
                     <TabPanel>
-                    <OrderTab items={drinks}></OrderTab>
+                        <OrderTab items={drinks}></OrderTab>
                     </TabPanel>
                 </Tabs>
             </div>

@@ -6,7 +6,7 @@ const Navbar = () => {
   const navLinks = <>
   <li><Link to= "/">Home</Link></li>
   <li><Link to= "/menu">Menu</Link></li>
-  <li><Link to= "/order">Order</Link></li>
+  <li><Link to="/order/:category">Order</Link></li>
   <li><Link to= "/login">Login</Link></li>
   <li><Link to= "/signup">Sign Up</Link></li>
 
@@ -32,7 +32,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+            className="menu menu-sm font-bold text-black dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
           
             {
               navLinks
