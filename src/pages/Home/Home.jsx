@@ -12,14 +12,13 @@ import Reviews from "./Reviews/Reviews";
 
 const Home = () => {
     return (
-        
+
         <div className="mb-6">
             <Helmet>
-        <title>Bistro Boss - Home</title>
- 
-      </Helmet>
-  
-          
+                <title>Bistro Boss - Home</title>
+            </Helmet>
+
+
             <Banner></Banner>
             <Category></Category>
             <ChefService></ChefService>
@@ -28,8 +27,8 @@ const Home = () => {
             <ChefRecommend></ChefRecommend>
             <Feature></Feature>
             <Reviews></Reviews>
-           
-          
+
+
         </div>
     );
 };

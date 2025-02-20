@@ -1,14 +1,28 @@
+import { useContext } from "react";
 import { Link } from "react-router";
+import { authContext } from "../../providers/AuthProvider";
+import logoImg from '../../assets/logo/logo.png'
 
 
 const Navbar = () => {
 
+  const { user, signOutUser } = useContext(authContext);
+
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => {
+        console.log("Successfully sign out")
+      })
+      .catch(error => {
+        console.log("Failed to sign out")
+      })
+  }
+
   const navLinks = <>
-  <li><Link to= "/">Home</Link></li>
-  <li><Link to= "/menu">Menu</Link></li>
-  <li><Link to="/order/:category">Order</Link></li>
-  <li><Link to= "/login">Login</Link></li>
-  <li><Link to= "/signup">Sign Up</Link></li>
+    <li><Link to="/">Home</Link></li>
+    <li><Link to="/menu">Menu</Link></li>
+    <li><Link to="/order/category">Order</Link></li>
+
 
   </>
 
@@ -33,45 +47,39 @@ const Navbar = () => {
           <ul
             tabIndex={0}
             className="menu menu-sm font-bold text-black dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-          
+
             {
               navLinks
             }
 
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <div className="flex items-center gap-2">
+          <img className="w-20 h-16 " src={logoImg} alt="" />
+          <h3 className="text-2xl">Bistro-Boss</h3>
+        </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-         
-              {
-                navLinks
-              }
+
+          {
+            navLinks
+          }
 
         </ul>
       </div>
       <div className="navbar-end">
-        <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-            </div>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-            <li>
-              <a className="justify-between">
-                Profile
-              </a>
-            </li>
-            <li><a>Settings</a></li>
-            <li><a>Logout</a></li>
-          </ul>
-        </div>
+        {
+          user ? <>
+            <button onClick={handleSignOut} className="btn-md mr-5 font-semibold">Sign Out</button>
+          </>
+            :
+            <>
+              <Link className="mr-3 " to="/login">Login</Link>
+              <Link className="mr-3" to="/signup">Register</Link>
+            </>
+        }
+
       </div>
     </div>
   );
