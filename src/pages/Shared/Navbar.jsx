@@ -2,16 +2,24 @@ import { useContext } from "react";
 import { Link } from "react-router";
 import { authContext } from "../../providers/AuthProvider";
 import logoImg from '../../assets/logo/logo.png'
+import Swal from "sweetalert2";
 
+import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../../hooks/useCart";
 
 const Navbar = () => {
-
-  const { user, signOutUser } = useContext(authContext);
+ const { user, signOutUser } = useContext(authContext);
+ const[cart] = useCart();
 
   const handleSignOut = () => {
     signOutUser()
       .then(() => {
-        console.log("Successfully sign out")
+        Swal.fire({
+          title: "Successfully sign out!",
+          icon: "success",
+          timer: 3000,
+          draggable: true
+        });
       })
       .catch(error => {
         console.log("Failed to sign out")
@@ -22,6 +30,17 @@ const Navbar = () => {
     <li><Link to="/">Home</Link></li>
     <li><Link to="/menu">Menu</Link></li>
     <li><Link to="/order/category">Order</Link></li>
+    <li>
+      <>
+        <Link to="/"><button >
+          <div className="flex gap-2 items-center">
+            <FaShoppingCart></FaShoppingCart>
+            <div className="badge">{cart.length}</div>
+          </div>
+        </button></Link>
+      </>
+
+    </li>
 
 
   </>
@@ -71,6 +90,8 @@ const Navbar = () => {
       <div className="navbar-end">
         {
           user ? <>
+
+            <span className="mr-2">{user?.displayName}</span>
             <button onClick={handleSignOut} className="btn-md mr-5 font-semibold">Sign Out</button>
           </>
             :

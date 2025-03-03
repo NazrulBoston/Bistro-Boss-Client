@@ -1,14 +1,26 @@
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import loginAnimatedImg from '../../assets/others/signIn.json'
 import { Helmet } from "react-helmet";
 import Lottie from "lottie-react";
-import { useContext } from "react";
+import { useContext, useRef, useState } from "react";
 import { authContext } from "../../providers/AuthProvider";
 import SocialLogin from "./SocialLogin";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import Swal from 'sweetalert2'
+const auth = getAuth()
+
 
 
 const Login = () => {
     const { signIn } = useContext(authContext)
+    const [showPassword, setShowPassword] = useState(false)
+    const emailRef = useRef()
+    const navigate = useNavigate()
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+    console.log("State in the location in login page", location.state)
+
 
     const handleSignIn = (e) => {
         e.preventDefault();
@@ -19,11 +31,38 @@ const Login = () => {
         console.log(user)
         signIn(email, password)
             .then(result => {
-                console.log("Successfully sign in", result.user)
+                if (result.user.emailVerified) {
+                    Swal.fire({
+                        title: "Successfully logged in",
+                        icon: "success",
+                        draggable: true
+                      });   
+                    e.target.reset();
+                    navigate(from, { replace: true });           
+                }
+               
+                else {
+                    alert('Please verify your email address.')
+                }
+
             })
             .catch(error => {
                 console.log(error)
             })
+    }
+
+    const handleResetPassword = () => {
+        console.log("Email reference", emailRef)
+        const email = emailRef.current.value;
+        if(!email){
+            console.log("Please Provide an valid email")
+        }
+        else {
+            sendPasswordResetEmail(auth, email)
+            .then(()=> {
+                alert('Check your email and reset the password')
+            })
+        }
     }
 
     return (
@@ -46,20 +85,37 @@ const Login = () => {
                                     <label className="label">
                                         <span className="label-text">Email</span>
                                     </label>
-                                    <input type="email" name="email" placeholder="email" className="input input-bordered" required />
+                                    <input type="email"
+                                        name="email"
+                                        placeholder="email"
+                                        className="input input-bordered"
+                                        ref={emailRef}
+                                        required />
                                 </div>
-                                <div className="form-control">
+                                <div className="form-control relative">
                                     <label className="label">
                                         <span className="label-text">Password</span>
                                     </label>
-                                    <input type="password" name="password" placeholder="password" className="input input-bordered" required />
-                                    <label className="label">
+                                    <input type={showPassword ? 'text' : 'password'}
+                                        name="password"
+                                        placeholder="password"
+                                        className="input input-bordered"
+                                        required />
+                                    <button onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-8 right-3   ">
+                                        {
+                                            showPassword ? <FaEyeSlash /> : <FaEye />
+
+                                        }
+
+
+                                    </button>
+                                    <label  onClick={handleResetPassword} className="label">
                                         <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                     </label>
                                 </div>
                                 <div className="form-control mt-6">
                                     <button className="btn btn-block btn-primary font-semibold">Login</button>
-                                <SocialLogin></SocialLogin>
+                                    <SocialLogin></SocialLogin>
                                 </div>
                             </form>
                             <p className="text-center mb-4">New here? <Link to="/signup" className="font-bold">Sign Up</Link></p>

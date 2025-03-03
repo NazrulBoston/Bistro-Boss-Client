@@ -13,7 +13,7 @@ const OrderFood = () => {
     const initialIndex = categories.indexOf(category)
     const [tabIndex, setTabIndex] = useState(initialIndex);
     const [menu] = useMenu();
-    console.log(category)
+    // console.log(category)
 
 
 
@@ -22,7 +22,7 @@ const OrderFood = () => {
     const pizza = menu.filter(item => item.category === 'pizza');
     const soup = menu.filter(item => item.category === 'soup');
     const drinks = menu.filter(item => item.category === 'drinks');
-    console.log(dessert)
+    // console.log(dessert)
     if(dessert.length === 0){
         return <p>Loading ....</p>
     }
