@@ -35,7 +35,8 @@ const Login = () => {
                     Swal.fire({
                         title: "Successfully logged in",
                         icon: "success",
-                        draggable: true
+                        draggable: true,
+                        timer:2500
                       });   
                     e.target.reset();
                     navigate(from, { replace: true });           
@@ -101,7 +102,7 @@ const Login = () => {
                                         placeholder="password"
                                         className="input input-bordered"
                                         required />
-                                    <button onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-8 right-3   ">
+                                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-8 right-3   ">
                                         {
                                             showPassword ? <FaEyeSlash /> : <FaEye />
 
@@ -114,7 +115,7 @@ const Login = () => {
                                     </label>
                                 </div>
                                 <div className="form-control mt-6">
-                                    <button className="btn btn-block btn-primary font-semibold">Login</button>
+                                    <button  type="submit" className="btn btn-block btn-primary font-semibold">Login</button>
                                     <SocialLogin></SocialLogin>
                                 </div>
                             </form>

@@ -5,6 +5,10 @@ import Login from "../components/SharedComponent/Login";
 import SignUp from "../components/SharedComponent/SignUp";
 import Menu from "../pages/Shared/Menu/Menu";
 import OrderFood from "../pages/Order/OrderFood";
+import Dashboard from "../layout/Dashboard";
+import Cart from "../pages/Dashboard/Cart/Cart";
+import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 
 
 const Router = () => {
@@ -15,8 +19,12 @@ const Router = () => {
                     <Route index element={<Home />} />
                     <Route path="/login" element={<Login></Login>} />
                     <Route path="/signup" element={<SignUp></SignUp>} />
-                    <Route path="/menu" element={<Menu></Menu>} />   
+                    <Route path="/menu" element={<Menu></Menu>} />
                     <Route path='/order/:category' element={<OrderFood></OrderFood>} />
+                </Route>
+                <Route path="/dashboard" element={<Dashboard />}>
+                    <Route path="cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
+                    <Route path="users" element= {<AllUsers></AllUsers>}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>

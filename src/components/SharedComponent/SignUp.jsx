@@ -8,6 +8,7 @@ import SocialLogin from "./SocialLogin";
 import { sendEmailVerification } from "firebase/auth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 
 
@@ -19,6 +20,7 @@ const SignUp = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic()
 
 
   const handleSignUp = e => {
@@ -62,17 +64,33 @@ const SignUp = () => {
           await updateUserProfile(name, photoURL);
           console.log("User profile updated");
           // console.log(name, photoURL)
-          Swal.fire({
-            title: "Successfully user created!",
-            icon: "success",
-            timer: 3000,
-            draggable: true
-          });
+          
+          
+           //create user entry in database
+           const userInfo ={
+            name: user.name,
+            email: user.email
+        }
+        axiosPublic.post('/users', userInfo)
+        .then(res => {
+          if(res.data.insertedId){
+            e.target.reset();
+            Swal.fire({
+              title: "Successfully user created!",
+              icon: "success",
+              timer: 3000,
+              draggable: true
+            });
+
+          }
+
+        })
+         
         } catch (error) {
           console.error("Error updating profile:", error);
         }
 
-        e.target.reset();
+     
         navigate('/');
 
         sendEmailVerification(result.user)
@@ -136,7 +154,7 @@ const SignUp = () => {
                     placeholder="Password"
                     className="input input-bordered"
                     required />
-                  <button onClick={() => setShowPassword(!showPassword)} className="absolute right-3 inset-y-8">
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 inset-y-8">
                     {
                       showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
                     }
@@ -148,12 +166,12 @@ const SignUp = () => {
                 <div className="form-control text-xs">
                   <label className="cursor-pointer label ">
                     <input type="checkbox" className="checkbox scale-75 " name="terms" />
-                    <span className="label-text"><a href="">Accept terms and condition</a></span>
+                    <span className="label-text">Accept terms and condition</span>
                   </label>
                 </div>
 
                 <div className="form-control mt-6">
-                  <button className="btn btn-block btn-primary">Sign Up</button>
+                  <button type="submit" className="btn btn-block btn-primary">Sign Up</button>
                   <SocialLogin />
                 </div>
               </form>
