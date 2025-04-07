@@ -26,11 +26,12 @@ const SocialLogin = () => {
                             icon: "success",
                             timer: 3000,
                             draggable: true
+                            
                         });
 
+                       
                         navigate("/");
                     })
-
 
             })
             .catch(error => {

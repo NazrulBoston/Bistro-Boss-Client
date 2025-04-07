@@ -39,6 +39,7 @@ const Login = () => {
                         timer:2500
                       });   
                     e.target.reset();
+                  
                     navigate(from, { replace: true });           
                 }
                
