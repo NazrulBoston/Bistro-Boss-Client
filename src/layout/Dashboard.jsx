@@ -1,12 +1,15 @@
 import { FaAd, FaBook, FaCalendar, FaHome, FaList, FaSearch, FaShoppingCart, FaUser, FaUtensils } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router";
 import useCart from "../hooks/useCart";
+import useAdmin from "../hooks/useAdmin";
+
 
 const Dashboard = () => {
     const [cart] = useCart();
-    // TODO: get isAdmin value from database
-
-    const isAdmin = true;
+   
+    // // TODO: get isAdmin value from database
+    const [isAdmin] = useAdmin()
+  
     return (
         <div>
             <div className="flex">
@@ -30,7 +33,7 @@ const Dashboard = () => {
                                     </li>
                                     <li>
                                         <NavLink to='/dashboard/bookings'>
-                                           <FaBook></FaBook>Manage Booking</NavLink>
+                                            <FaBook></FaBook>Manage Booking</NavLink>
                                     </li>
                                     <li>
                                         <NavLink to='/dashboard/users'>
