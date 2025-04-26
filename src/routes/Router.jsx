@@ -7,7 +7,7 @@ import Menu from "../pages/Shared/Menu/Menu";
 import OrderFood from "../pages/Order/OrderFood";
 import Dashboard from "../layout/Dashboard";
 import Cart from "../pages/Dashboard/Cart/Cart";
-import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 
 

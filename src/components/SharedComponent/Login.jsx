@@ -36,16 +36,17 @@ const Login = () => {
                         title: "Successfully logged in",
                         icon: "success",
                         draggable: true,
-                        timer:2500
-                      });   
+                        timer: 2500
+                    });
                     e.target.reset();
-                  
-                    navigate(from, { replace: true });           
+                   
                 }
-               
+
                 else {
                     alert('Please verify your email address.')
                 }
+             
+                navigate(from, { replace: true });
 
             })
             .catch(error => {
@@ -56,14 +57,14 @@ const Login = () => {
     const handleResetPassword = () => {
         console.log("Email reference", emailRef)
         const email = emailRef.current.value;
-        if(!email){
+        if (!email) {
             console.log("Please Provide an valid email")
         }
         else {
             sendPasswordResetEmail(auth, email)
-            .then(()=> {
-                alert('Check your email and reset the password')
-            })
+                .then(() => {
+                    alert('Check your email and reset the password')
+                })
         }
     }
 
@@ -111,12 +112,12 @@ const Login = () => {
 
 
                                     </button>
-                                    <label  onClick={handleResetPassword} className="label">
+                                    <label onClick={handleResetPassword} className="label">
                                         <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                     </label>
                                 </div>
                                 <div className="form-control mt-6">
-                                    <button  type="submit" className="btn btn-block btn-primary font-semibold">Login</button>
+                                    <button type="submit" className="btn btn-block btn-primary font-semibold">Login</button>
                                     <SocialLogin></SocialLogin>
                                 </div>
                             </form>
