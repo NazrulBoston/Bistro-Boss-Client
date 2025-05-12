@@ -9,6 +9,8 @@ import Dashboard from "../layout/Dashboard";
 import Cart from "../pages/Dashboard/Cart/Cart";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
+import AddItems from "../pages/Dashboard/AddItems/AddItems";
+import AdminRoute from "./AdminRoute/AdminRoute";
 
 
 const Router = () => {
@@ -24,7 +26,8 @@ const Router = () => {
                 </Route>
                 <Route path="/dashboard" element={<Dashboard />}>
                     <Route path="cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
-                    <Route path="users" element= {<AllUsers></AllUsers>}></Route>
+                    <Route path="addItems" element ={<AdminRoute><AddItems></AddItems></AdminRoute>}></Route>
+                    <Route path="users" element= {<AdminRoute><AllUsers></AllUsers></AdminRoute>}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>
