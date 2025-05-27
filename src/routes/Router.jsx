@@ -12,6 +12,7 @@ import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import AddItems from "../pages/Dashboard/AddItems/AddItems";
 import AdminRoute from "./AdminRoute/AdminRoute";
 import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
+import UpdatedItem from "../pages/Dashboard/UpdatedItem/UpdatedItem";
 
 
 const Router = () => {
@@ -30,6 +31,11 @@ const Router = () => {
                     <Route path="addItems" element ={<AdminRoute><AddItems></AddItems></AdminRoute>}></Route>
                     <Route path="users" element= {<AdminRoute><AllUsers></AllUsers></AdminRoute>}></Route>
                     <Route path="manageItems" element= {<PrivateRoute><AdminRoute><ManageItems></ManageItems></AdminRoute></PrivateRoute>}></Route>
+                    <Route
+                     path="updateItem/:id" 
+                     element= {<PrivateRoute><AdminRoute><UpdatedItem></UpdatedItem></AdminRoute></PrivateRoute>
+                
+                     }></Route>
                 </Route>
             </Routes>
         </BrowserRouter>

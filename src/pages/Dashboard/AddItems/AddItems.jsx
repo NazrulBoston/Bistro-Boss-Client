@@ -10,8 +10,8 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 const AddItems = () => {
     const axiosPublic = useAxiosPublic();
-    const axiosSecure = useAxiosSecure();
     const { register, handleSubmit } = useForm()
+    const axiosSecure = useAxiosSecure();
     const onSubmit = async (data) => {
         console.log(data)
         //image upload to imgbb and then get an url
@@ -83,8 +83,6 @@ const AddItems = () => {
                             </fieldset>
 
                         </div>
-
-
 
 
 
