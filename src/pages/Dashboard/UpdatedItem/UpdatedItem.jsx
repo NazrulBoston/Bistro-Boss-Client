@@ -6,56 +6,77 @@ import useMenu from "../../../hooks/useMenu";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 
 const UpdatedItem = () => {
   const [menu] = useMenu(); // Get the full menu list
   const { id } = useParams();
-   const { register, handleSubmit } = useForm()
+   const { register, handleSubmit, reset } = useForm()
 
     const axiosSecure = useAxiosSecure();
-    const onSubmit = async (data) => {
-        console.log(data)
-        //image upload to imgbb and then get an url
-        const imageFile = { image: data.image[0] }
-        const res = await axiosPublic.post(image_hosting_api, imageFile, {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        });
-        if (res.data.success) {
-            //now send the menu item data to the server with image url
-            const menuItem = {
-                name: data.name,
-                category: data.category,
-                price: parseFloat(data.price),
-                image: res.data.data.display_url
-            }
-            const menuRes = await axiosSecure.post('/menu', menuItem);
-            console.log(menuRes.data)
-            if (menuRes.data.insertedId) {
-                // show success popup
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Item added successfully",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            }
-        }
+    const axiosPublic = useAxiosPublic();
+   const onSubmit = async (data) => {
+  let imageUrl = image; // keep the original image if no new one is uploaded
 
-    };
+  if (data.image && data.image[0]) {
+    const formData = new FormData();
+    formData.append("image", data.image[0]);
+
+    try {
+      const res = await axiosPublic.post(image_hosting_api, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (res.data.success) {
+        imageUrl = res.data.data.display_url;
+      } else {
+        console.error("Image upload failed", res.data);
+        return; // stop if upload failed
+      }
+    } catch (err) {
+      console.error("Upload error", err);
+      return;
+    }
+  }
+
+  const menuItem = {
+    name: data.name,
+    category: data.category,
+    price: parseFloat(data.price),
+    recipe: data.recipe,
+    image: imageUrl,
+  };
+
+  try {
+    const menuRes = await axiosSecure.patch(`/menu/${_id}`, menuItem);
+    if (menuRes.data.modifiedCount > 0) {
+        reset()
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `${data.name} is updated to the menu`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  } catch (err) {
+    console.error("Update error", err);
+  }
+};
+
 
   // Find the item directly using the id
   const currentItem = menu.find(item => item._id === id);
 
   // Destructure safely
-  const { name, price, category, recipe, image } = currentItem || {};
+  const { name, price, category, recipe, image, _id } = currentItem || {};
 
   return (
     <div>
@@ -112,7 +133,7 @@ const UpdatedItem = () => {
                           </div>
                           {/* file input */}
                           <div className=" my-6">
-                              <input {...register('image')} defaultValue={image} type="file" className="file-input w-full max-w-xs " />
+                              <input {...register('image')} type="file" className="file-input w-full max-w-xs " />
                           </div>
                           <button className="btn bg-black text-white">Update Menu Items </button>
                       </form>

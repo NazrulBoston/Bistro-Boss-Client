@@ -6,6 +6,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link } from "react-router";
 
 
+
 const ManageItems = () => {
     const [menu, , refetch] = useMenu();
     const axiosSecure = useAxiosSecure()
@@ -86,11 +87,14 @@ const ManageItems = () => {
                                         ${item.price}
 
                                     </td>
-                                    <Link to = {`/dashboard/updateItem/${item._id}`}>
-                                        <td>
-                                            <button className="btn btn-ghost btn-xs bg-gray-200 text-red-500"><FaEdit></FaEdit></button>
-                                        </td>
-                                    </Link>
+                                    <td>
+                                        <Link to={`/dashboard/updateItem/${item._id}`}>
+                                            <button className="btn btn-ghost btn-xs bg-gray-200 text-red-500">
+                                                <FaEdit />
+                                            </button>
+                                        </Link>
+                                    </td>
+
                                     <td>
                                         <button onClick={() => handleDeleteItem(item)} className="btn btn-ghost btn-xs bg-gray-200 text-red-500"><FaTrashAlt></FaTrashAlt></button>
                                     </td>

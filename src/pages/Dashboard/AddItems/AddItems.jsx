@@ -10,7 +10,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 const AddItems = () => {
     const axiosPublic = useAxiosPublic();
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, reset } = useForm()
     const axiosSecure = useAxiosSecure();
     const onSubmit = async (data) => {
         console.log(data)
@@ -32,6 +32,7 @@ const AddItems = () => {
             const menuRes = await axiosSecure.post('/menu', menuItem);
             console.log(menuRes.data)
             if (menuRes.data.insertedId) {
+                reset()
                 // show success popup
                 Swal.fire({
                     position: "top-end",
