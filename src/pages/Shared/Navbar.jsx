@@ -6,10 +6,12 @@ import Swal from "sweetalert2";
 
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../../hooks/useCart";
+import useAdmin from "../../hooks/useAdmin";
 
 const Navbar = () => {
- const { user, signOutUser } = useContext(authContext);
- const[cart] = useCart();
+  const { user, signOutUser } = useContext(authContext);
+  const [isAdmin] = useAdmin();
+  const [cart] = useCart();
 
   const handleSignOut = () => {
     signOutUser()
@@ -30,6 +32,15 @@ const Navbar = () => {
     <li><Link to="/">Home</Link></li>
     <li><Link to="/menu">Menu</Link></li>
     <li><Link to="/order/category">Order</Link></li>
+    {
+      user && isAdmin && <li><Link to="/dashboard/adminHome">Dashboard</Link></li>
+
+    }
+    {
+      user && !isAdmin && <li><Link to="/dashboard/userHome">Dashboard</Link></li>
+
+    }
+
     <li>
       <>
         <Link to="/dashboard/cart"><button >

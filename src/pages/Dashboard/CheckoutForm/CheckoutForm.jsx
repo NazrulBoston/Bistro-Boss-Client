@@ -3,23 +3,27 @@ import { useEffect, useState } from 'react';
 import useAuth from '../../../hooks/useAuth';
 import useCart from '../../../hooks/useCart'
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router';
 
 
 const CheckoutForm = () => {
     const [error, setError] = useState('');
     const [clientSecret, setClientSecret] = useState('');
+    const [transactionId, setTransactionId] = useState('')
     const stripe = useStripe();
     const elements = useElements();
     const { user } = useAuth()
     const axiosSecure = useAxiosSecure();
-    const [cart] = useCart();
+    const [cart, refetch] = useCart();
+    const navigate = useNavigate();
     const totalPrice = cart.reduce((total, item) => total + item.price, 0)
 
     useEffect(() => {
         if (totalPrice > 0) {
             axiosSecure.post('/create-payment-intent', { price: totalPrice })
                 .then(res => {
-                    console.log(res.data.clientSecret)
+                    // console.log(res.data.clientSecret)
                     setClientSecret(res.data.clientSecret)
                 })
         }
@@ -72,6 +76,36 @@ const CheckoutForm = () => {
         else {
             console.log('payment intent', paymentIntent)
         }
+        if (paymentIntent.status === 'succeeded') {
+            console.log('Transaction Id', paymentIntent.id)
+            setTransactionId(paymentIntent.id)
+
+            // now save the payment in the database
+            const payment = {
+                email: user.email,
+                price: totalPrice,
+                transactionId: paymentIntent.id,
+                date: new Date(),
+                cartIds: cart.map(item => item._id),
+                menuItemIds: cart.map(item => item.menuId),
+                itemNames: cart.map(item => item.name),
+                status: 'pending'
+            }
+            const res = await axiosSecure.post('/payments', payment)
+            console.log('payment save', res.data)
+            refetch();
+            if (res.data?.paymentResult?.insertedId) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Thank you for the payment",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                navigate('/dashboard/paymentHistory')
+            }
+        }
+
 
 
     };
@@ -98,6 +132,7 @@ const CheckoutForm = () => {
                 Pay
             </button>
             <p className='text-red-600 text-2xl'>{error}</p>
+            {transactionId && <p className='text-green-500'> Your transaction id:{transactionId}</p>}
         </form>
     );
 };

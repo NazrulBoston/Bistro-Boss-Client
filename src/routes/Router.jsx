@@ -14,6 +14,9 @@ import AdminRoute from "./AdminRoute/AdminRoute";
 import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
 import UpdatedItem from "../pages/Dashboard/UpdatedItem/UpdatedItem";
 import Payments from "../pages/Dashboard/Payments/Payments";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import UserHome from "../pages/Dashboard/UserHome/UserHome";
+import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
 
 
 const Router = () => {
@@ -28,8 +31,11 @@ const Router = () => {
                     <Route path='/order/:category' element={<OrderFood></OrderFood>} />
                 </Route>
                 <Route path="/dashboard" element={<Dashboard />}>
+                    <Route path="userHome" element = {<UserHome></UserHome>}></Route>
+                    <Route path="adminHome" element = {<AdminRoute><AdminHome></AdminHome></AdminRoute>}></Route>
                     <Route path="Payments" element = {<Payments></Payments>}></Route>
                     <Route path="cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
+                    <Route path="paymentHistory" element={<PrivateRoute><PaymentHistory /></PrivateRoute>} />
                     <Route path="addItems" element ={<AdminRoute><AddItems></AddItems></AdminRoute>}></Route>
                     <Route path="users" element= {<AdminRoute><AllUsers></AllUsers></AdminRoute>}></Route>
                     <Route path="manageItems" element= {<PrivateRoute><AdminRoute><ManageItems></ManageItems></AdminRoute></PrivateRoute>}></Route>
