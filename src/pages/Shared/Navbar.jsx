@@ -99,20 +99,35 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        {
-          user ? <>
+        {user ? (
+          <div className="flex items-center gap-3">
+            {/* Profile Picture */}
+            <img
+              src={user?.photoURL}
+              alt="Profile"
+              referrerPolicy="no-referrer"  // <-- important for Google avatars
+              className="w-10 h-10 rounded-full border border-gray-300 object-cover"
+            />
 
+            {/* Username */}
             <span className="mr-2">{user?.displayName}</span>
-            <button onClick={handleSignOut} className="btn-md mr-5 font-semibold">Sign Out</button>
-          </>
-            :
-            <>
-              <Link className="mr-3 " to="/login">Login</Link>
-              <Link className="mr-3" to="/signup">Register</Link>
-            </>
-        }
 
+            {/* Sign Out Button */}
+            <button
+              onClick={handleSignOut}
+              className="btn-md mr-5 font-semibold"
+            >
+              Sign Out
+            </button>
+          </div>
+        ) : (
+          <>
+            <Link className="mr-3" to="/login">Login</Link>
+            <Link className="mr-3" to="/signup">Register</Link>
+          </>
+        )}
       </div>
+
     </div>
   );
 };

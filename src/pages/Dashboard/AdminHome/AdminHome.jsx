@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaBook, FaDollarSign, FaList, FaUsers } from "react-icons/fa";
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Pie, PieChart, ResponsiveContainer, Legend } from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Pie, PieChart, Legend } from 'recharts';
 
 const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink'];
 
@@ -48,7 +48,7 @@ const AdminHome = () => {
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'pink'];
 
     const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
-        const radius = innerRadius + (outerRadius - innerRadius) * 0.35;
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
         const x = cx + radius * Math.cos(-(midAngle ?? 0) * RADIAN);
         const y = cy + radius * Math.sin(-(midAngle ?? 0) * RADIAN);
 
