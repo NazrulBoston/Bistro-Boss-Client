@@ -31,7 +31,8 @@ const Login = () => {
         console.log(user)
         signIn(email, password)
             .then(result => {
-                if (result.user.emailVerified) {
+                 console.log(result.user)
+                if (result.user) {
                     Swal.fire({
                         title: "Successfully logged in",
                         icon: "success",
@@ -39,6 +40,8 @@ const Login = () => {
                         timer: 2500
                     });
                     e.target.reset();
+                    navigate("/")
+                   
                    
                 }
 
